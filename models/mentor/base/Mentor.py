@@ -7,6 +7,9 @@ class Mentor(ABC):
         self.__surname = surname
         self.__courses_attached = []
 
+    def add_course(self, course_name: str):
+        self.__courses_attached.append(course_name)
+
     def get_name(self):
         return self.__name
 
