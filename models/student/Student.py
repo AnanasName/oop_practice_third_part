@@ -38,3 +38,39 @@ class Student:
 
     def get_grades(self):
         return self.__grades
+
+    def __calculate_average_grade(self) -> float:
+        elements_sum = 0
+        elements_number = 0
+
+        for key in self.__grades.keys():
+            elements_sum = elements_sum + self.__grades[key]
+            elements_number = elements_number + 1
+
+        if (elements_number != 0):
+            average_grade = elements_sum / elements_number
+        else:
+            average_grade = 0.0
+
+        return average_grade
+
+    def __get_courses_in_progress_as_string(self):
+        result_string = ""
+        for index, course in enumerate(self.__courses_in_progress):
+            if index == 0:
+                result_string = course
+            else:
+                result_string = result_string + f", {course}"
+        return result_string
+
+    def __get_finished_courses_as_string(self):
+        result_string = ""
+        for index, course in enumerate(self.__finished_courses):
+            if index == 0:
+                result_string = course
+            else:
+                result_string = result_string + f", {course}"
+        return result_string
+
+    def __str__(self):
+        return f"Имя: {self.__name}\nФамилия: {self.__surname}\nСредняя оценка за лекции: {self.__calculate_average_grade()}\nКурсы в процессе изучения: {self.__get_courses_in_progress_as_string()} \nЗавершенные курсы: {self.__get_finished_courses_as_string()}"

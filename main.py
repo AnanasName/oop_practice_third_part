@@ -10,8 +10,14 @@ def main():
     cool_reviewer.rate_home_work(best_student, "Python", 10)
 
     best_student.add_course_in_progress("Python")
+    best_student.add_course_in_progress("Java")
+    best_student.add_finished_courses("ML")
     cool_lecturer.add_course("Python")
     best_student.rate_lecturer("Python", cool_lecturer, 10)
+
+    print(cool_lecturer)
+
+    print(best_student)
 
     print("Имя студента: ", best_student.get_name())
     print("Имя преподавателя: ", cool_lecturer.get_name())
