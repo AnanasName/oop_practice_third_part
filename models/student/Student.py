@@ -39,7 +39,7 @@ class Student:
     def get_grades(self):
         return self.__grades
 
-    def __calculate_average_grade(self) -> float:
+    def calculate_average_grade(self) -> float:
         elements_sum = 0
         elements_number = 0
 
@@ -73,4 +73,13 @@ class Student:
         return result_string
 
     def __str__(self):
-        return f"Имя: {self.__name}\nФамилия: {self.__surname}\nСредняя оценка за лекции: {self.__calculate_average_grade()}\nКурсы в процессе изучения: {self.__get_courses_in_progress_as_string()} \nЗавершенные курсы: {self.__get_finished_courses_as_string()}"
+        return f"Имя: {self.__name}\nФамилия: {self.__surname}\nСредняя оценка за лекции: {self.calculate_average_grade()}\nКурсы в процессе изучения: {self.__get_courses_in_progress_as_string()} \nЗавершенные курсы: {self.__get_finished_courses_as_string()}"
+
+    def __lt__(self, other):
+        return self.calculate_average_grade() < other.calculate_average_grade()
+
+    def __gt__(self, other):
+        return self.calculate_average_grade() > other.calculate_average_grade()
+
+    def __hash__(self):
+        return hash((self.__name, self.__surname, self.__gender))

@@ -11,13 +11,13 @@ class Lecturer(Mentor):
         if self.get_courses_attached().__contains__(course_name):
             self.__grades[course_name] = grade
 
-    def get_grades(self):
+    def get_grades(self) -> dict:
         return self.__grades
 
     def do_lecture(self):
         print("Do My Work")
 
-    def __calculate_average_grade(self) -> float:
+    def calculate_average_grade(self) -> float:
         elements_sum = 0
         elements_number = 0
 
@@ -33,4 +33,16 @@ class Lecturer(Mentor):
         return average_grade
 
     def __str__(self):
-        return f"Имя: {self._name}\nФамилия: {self._surname}\nСредняя оценка за лекции: {self.__calculate_average_grade()}"
+        return f"Имя: {self._name}\nФамилия: {self._surname}\nСредняя оценка за лекции: {self.calculate_average_grade()}"
+
+    def __lt__(self, other):
+        return self.calculate_average_grade() < other.calculate_average_grade()
+
+    def __gt__(self, other):
+        return self.calculate_average_grade() > other.calculate_average_grade()
+
+    def __add__(self, other: str):
+        self.add_course(other)
+
+    def __sub__(self, other: str):
+        self.remove_course(other)

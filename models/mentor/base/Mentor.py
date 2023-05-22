@@ -10,6 +10,9 @@ class Mentor(ABC):
     def add_course(self, course_name: str):
         self._courses_attached.append(course_name)
 
+    def remove_course(self, course_name: str):
+        self._courses_attached.remove(course_name)
+
     def get_name(self):
         return self._name
 
