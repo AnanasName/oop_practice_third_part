@@ -3,34 +3,28 @@ from models.mentor.Reviewer import Reviewer
 from models.student.Student import Student
 
 
-def calculate_average_grade_by_course_to_lecturers(lecturers: list[Lecturer], course_name: str):
-    sum = 0
-    count = 0
-    for lecturer in lecturers:
-        lecturer_grades = lecturer.get_grades()
-        if course_name in lecturer_grades:
-            grade = lecturer_grades[course_name]
-            sum = sum + grade
-            count = count + 1
-    average_grade = 0
-    if count != 0:
-        average_grade = sum / count
-    return average_grade
+class AverageCalc:
 
+    def __init__(self, grades_list: list[dict], name_to_find: str):
+        self.__grades_list = grades_list
+        self.__name_to_find = name_to_find
 
-def calculate_average_grade_by_course_to_students(students: list[Student], course_name: str):
-    sum = 0
-    count = 0
-    for student in students:
-        student_grades = student.get_grades()
-        if course_name in student_grades:
-            grade = student_grades[course_name]
-            sum = sum + grade
-            count = count + 1
-    average_grade = 0
-    if count != 0:
-        average_grade = sum / count
-    return average_grade
+    def __float__(self):
+        sum = 0
+        count = 0
+        for element in self.__grades_list:
+            element_keys = element.keys()
+            if self.__name_to_find in element_keys:
+                grade = element[self.__name_to_find]
+                sum = sum + grade
+                count = count + 1
+        average_grade = 0.0
+        if count != 0:
+            average_grade = sum / count
+        return average_grade
+
+    def get_name_to_find(self):
+        return self.__name_to_find
 
 
 def main():
@@ -61,19 +55,23 @@ def main():
     cool_reviewer.rate_home_work(almost_best_student, "Python", 9)
     cool_reviewer + "Java"
 
-    students = [best_student, almost_best_student, not_best_student]
+    students_grades_list = [best_student.get_grades(), almost_best_student.get_grades(), not_best_student.get_grades()]
 
-    print("Средняя оценка студентов за курс Python от проверяющих: ",
-          calculate_average_grade_by_course_to_students(students, "Python"))
+    average_calc_students = AverageCalc(students_grades_list, "Python")
+
+    print(f"Средняя оценка студентов за курс {average_calc_students.get_name_to_find()} от проверяющих: ",
+          float(average_calc_students))
 
     best_student.rate_lecturer("Python", cool_lecturer, 10)
     best_student.rate_lecturer("Python", not_so_cool_lecturer, 7)
     best_student.rate_lecturer("Python", bad_lecturer, 4)
 
-    lecturers = [cool_lecturer, not_so_cool_lecturer, bad_lecturer]
+    lecturers_grades_list = [cool_lecturer.get_grades(), not_so_cool_lecturer.get_grades(), bad_lecturer.get_grades()]
 
-    print("Средняя оценка лекторов за курс Python от студентов: ",
-          calculate_average_grade_by_course_to_lecturers(lecturers, "Python"))
+    average_calc_lecturers = AverageCalc(lecturers_grades_list, "Python")
+
+    print(f"Средняя оценка лекторов за курс {average_calc_lecturers.get_name_to_find()} от студентов: ",
+          float(average_calc_lecturers))
 
     print("Лучше ли первый студент второго? ", best_student > not_best_student)
 
